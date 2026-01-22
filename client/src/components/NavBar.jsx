@@ -10,7 +10,7 @@ import { removeFeed } from "../utils/feedSlice";
 
 import { FiMenu, FiX } from "react-icons/fi"; 
 
-const Navbar = () => {
+const NavBar = () => {
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
   const location = useLocation();
@@ -166,4 +166,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;

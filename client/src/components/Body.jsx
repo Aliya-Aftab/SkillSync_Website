@@ -37,7 +37,7 @@ const Body = () => {
   
   return (
     <div>
-      <Navbar />
+      <NavBar />
       <div className="pt-20">
         <Outlet />
       </div>
