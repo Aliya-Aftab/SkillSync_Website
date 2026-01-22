@@ -17,6 +17,7 @@ import Connections from "./components/Connections";
 import SmartMatches from "./components/SmartMatches";
 import Assistant from "./pages/Assistant";
 import Chat from "./components/Chat";
+import NavBar from "./NavBar"; 
 
 import { Toaster } from "react-hot-toast";
 
