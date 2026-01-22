@@ -1,7 +1,7 @@
 
 
 import { Outlet, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar"; 
+import NavBar from "./NavBar"; 
 import Footer from "./Footer";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
