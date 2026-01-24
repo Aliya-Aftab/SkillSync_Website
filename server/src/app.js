@@ -11,7 +11,7 @@ const http = require("http");
 
 app.use(
   cors({
-   origin: process.env.FRONTEND_URL || "http://localhost:5173",
+   origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -34,6 +34,12 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+
+// app.use("/auth", authRouter);
+// app.use("/profile", profileRouter);
+// app.use("/request", requestRouter);
+// app.use("/user", userRouter);
+
 app.use("/api", chatRouter);
 app.use("/api", smartMatchRouter);
 app.use("/api", require("./routes/aiAssistant"));

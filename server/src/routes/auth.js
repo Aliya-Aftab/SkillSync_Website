@@ -1,3 +1,91 @@
+// const express = require("express");
+// const authRouter = express.Router();
+// const User = require("../models/user");
+// const validator = require("validator");
+// const bcrypt = require("bcrypt");
+// const { validateSignupData } = require("../utils/validation");
+
+// //signup api for signing the user
+// authRouter.post("/signup", async (req, res) => {
+//   try {
+//     //Validate the data
+//     validateSignupData(req);
+//     const {
+//       firstName,
+//       lastName,
+//       emailId,
+//       password,
+//       age,
+//       gender,
+//       about,
+//       skills,
+//     } = req.body;
+//     //Encrypt the password
+//     const passwordHash = await bcrypt.hash(password, 10);
+
+//     const checkEmail = await User.findOne({ emailId });
+//     console.log(checkEmail);
+//     if (checkEmail) {
+//       throw new Error("Email Already Exist");
+//     }
+
+//     const user = new User({
+//       firstName,
+//       lastName,
+//       emailId,
+//       password: passwordHash,
+//       // age,
+//       // gender,
+//       // about,
+//       // skills,
+//     });
+//     const savedUser = await user.save();
+//     const token = await savedUser.getjwt();
+//     res.cookie("token", token, {
+//       expires: new Date(Date.now() + 8 * 3600000),
+//     });
+//     res
+//       .status(200)
+//       .json({ message: "User added successfully", data: savedUser });
+//   } catch (err) {
+//     res.status(400).send("ERROR:" + err.message);
+//   }
+// });
+
+// authRouter.post("/login", async (req, res) => {
+//   try {
+//     const { emailId, password } = req.body;
+//     if (!validator.isEmail(emailId)) {
+//       throw new Error("Invalid Email");
+//     }
+//     const user = await User.findOne({ emailId: emailId });
+//     if (!user) {
+//       throw new Error("Invalid Credentials");
+//     }
+//     const isValidPassword = await user.validatePassword(password);
+//     if (isValidPassword) {
+//       const token = await user.getjwt();
+//       res.cookie("token", token, {
+//         expires: new Date(Date.now() + 8 * 3600000),
+//       });
+//       res.status(200).json({ user });
+//     } else {
+//       throw new Error("Invalid Credentials");
+//     }
+//   } catch (err) {
+//     res.status(400).send("ERROR:" + err.message);
+//   }
+// });
+
+// authRouter.post("/logout", async (req, res) => {
+//   res
+//     .cookie("token", null, {
+//       expires: new Date(Date.now()),
+//     })
+//     .send("User Logged out successfully");
+// });
+
+// module.exports = authRouter;
 const express = require("express");
 const authRouter = express.Router();
 const User = require("../models/user");
@@ -41,9 +129,15 @@ authRouter.post("/signup", async (req, res) => {
     });
     const savedUser = await user.save();
     const token = await savedUser.getjwt();
+
+    // --- COOKIE FIX APPLIED HERE ---
     res.cookie("token", token, {
       expires: new Date(Date.now() + 8 * 3600000),
+      httpOnly: true,
+      secure: true,       // REQUIRED: Allows cookie over HTTPS (Render/Vercel)
+      sameSite: "none",   // REQUIRED: Allows cookie across different domains
     });
+    
     res
       .status(200)
       .json({ message: "User added successfully", data: savedUser });
@@ -65,9 +159,15 @@ authRouter.post("/login", async (req, res) => {
     const isValidPassword = await user.validatePassword(password);
     if (isValidPassword) {
       const token = await user.getjwt();
+
+      // --- COOKIE FIX APPLIED HERE ---
       res.cookie("token", token, {
         expires: new Date(Date.now() + 8 * 3600000),
+        httpOnly: true,
+        secure: true,       // REQUIRED: Allows cookie over HTTPS
+        sameSite: "none",   // REQUIRED: Allows cookie across different domains
       });
+
       res.status(200).json({ user });
     } else {
       throw new Error("Invalid Credentials");
@@ -79,8 +179,12 @@ authRouter.post("/login", async (req, res) => {
 
 authRouter.post("/logout", async (req, res) => {
   res
+    // --- COOKIE FIX APPLIED HERE ---
     .cookie("token", null, {
       expires: new Date(Date.now()),
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
     })
     .send("User Logged out successfully");
 });
