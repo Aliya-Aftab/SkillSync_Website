@@ -4,6 +4,23 @@ import toast from "react-hot-toast";
 import { BASE_URL } from "../utils/constants";
 import { FiCpu, FiCheck, FiX, FiZap, FiActivity } from "react-icons/fi";
 
+const PremiumBackground = () => (
+  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
+    {/* 1. Deep Purple Orb */}
+    <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.15] rounded-full blur-[120px]"></div>
+    {/* 2. Sharp Geometry */}
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-3xl"></div>
+    {/* 3. Precision Grid */}
+    <div className="absolute inset-0 opacity-[0.6]" 
+         style={{ 
+           backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', 
+           backgroundSize: '32px 32px' 
+         }}>
+    </div>
+  </div>
+);
+
 const SmartMatches = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,28 +70,6 @@ const SmartMatches = () => {
     fetchSmartMatches();
   }, []);
 
-
-  const PremiumBackground = () => (
-    
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
-       
-       {/* 1. Deep Purple Orb */}
-       <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.15] rounded-full blur-[120px]"></div>
-       
-       {/* 2. Sharp Geometry */}
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-3xl"></div>
-
-       {/* 3. Precision Grid */}
-       <div className="absolute inset-0 opacity-[0.6]" 
-            style={{ 
-              backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', 
-              backgroundSize: '32px 32px' 
-            }}>
-       </div>
-    </div>
-  );
-
   return (
     // Added 'relative' so the absolute background knows where to sit
     <div className="min-h-screen pt-10 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -91,15 +86,15 @@ const SmartMatches = () => {
             Smart <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] to-purple-600">Matches</span>
           </h1>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-lg">
-             Algorithmic compatibility based on your unique tech stack.
+              Algorithmic compatibility based on your unique tech stack.
           </p>
         </div>
 
         {/* CONTENT */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20">
-             <FiCpu className="text-4xl text-[#4F46E5] animate-spin mb-4" />
-             <p className="text-slate-400 font-bold text-xs uppercase tracking-widest animate-pulse">Computing Compatibility...</p>
+              <FiCpu className="text-4xl text-[#4F46E5] animate-spin mb-4" />
+              <p className="text-slate-400 font-bold text-xs uppercase tracking-widest animate-pulse">Computing Compatibility...</p>
           </div>
         ) : matches.length === 0 ? (
           <div className="max-w-md mx-auto bg-white/60 backdrop-blur-md rounded-[2rem] border border-white/60 shadow-xl shadow-indigo-500/5 p-12 text-center">

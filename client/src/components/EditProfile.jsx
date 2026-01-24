@@ -4,7 +4,18 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
 import UserCard from "./UserCard";
-import { FiSave, FiAlertCircle, FiCheck, FiLoader } from "react-icons/fi";
+import { FiSave, FiAlertCircle, FiLoader } from "react-icons/fi";
+import toast from "react-hot-toast"; 
+
+// Prevents background re-render on every keystroke
+const PremiumBackground = () => (
+  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
+    <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.2] rounded-full blur-[120px]"></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-300/60 rounded-full opacity-50"></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
+    <div className="absolute inset-0 opacity-[0.6]" style={{ backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}></div>
+  </div>
+);
 
 const EditProfile = () => {
   const user = useSelector((store) => store.user);
@@ -19,7 +30,8 @@ const EditProfile = () => {
   const [skills, setSkills] = useState(user?.skills?.join(", ") || "");
 
   const [error, setError] = useState("");
-  const [showToast, setShowToast] = useState(false);
+  
+  // ❌ REMOVED: Manual Toast State (const [showToast, setShowToast]...)
 
   useEffect(() => {
     if (user) {
@@ -54,22 +66,13 @@ const EditProfile = () => {
       
       dispatch(addUser(res.data.data));
       
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
+      toast.success("Profile updated successfully");
+      
     } catch (error) {
       console.error(error);
       setError(error.response?.data || "An error occurred");
     }
   };
-
-  const PremiumBackground = () => (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
-      <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.2] rounded-full blur-[120px]"></div>
-      <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-300/60 rounded-full opacity-50"></div>
-      <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute inset-0 opacity-[0.6]" style={{ backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}></div>
-    </div>
-  );
 
   if (!user) {
     return (
@@ -81,7 +84,9 @@ const EditProfile = () => {
 
   return (
     <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl border border-white/40">
+      
       <PremiumBackground />
+
       <div className="relative z-10 flex flex-col lg:flex-row bg-white/60 backdrop-blur-2xl">
         
         {/* LEFT COLUMN: Form */}
@@ -158,14 +163,6 @@ const EditProfile = () => {
         </div>
       </div>
 
-      {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 animate-fade-in-up">
-          <div className="bg-slate-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700">
-             <FiCheck className="text-green-400 text-lg" />
-             <div><p className="font-bold text-sm">Success</p><p className="text-slate-400 text-xs">Profile updated successfully</p></div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

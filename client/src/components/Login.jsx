@@ -1,11 +1,20 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
-import { FiArrowRight, FiAlertCircle, FiLock, FiUser, FiMail } from "react-icons/fi";
+import { FiArrowRight, FiAlertCircle, FiLock, FiUser, FiMail, FiEye, FiEyeOff } from "react-icons/fi";
+
+// OPTIMIZATION: Static background component
+const PremiumBackground = () => (
+  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
+    <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.15] rounded-full blur-[120px]"></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
+    <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}></div>
+  </div>
+);
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +23,12 @@ const Login = () => {
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState(null);
   
+  // Toggle Password Visibility
+  const [showPassword, setShowPassword] = useState(false);
+  
+  // Password Strength Message
+  const [passwordFeedback, setPasswordFeedback] = useState("");
+
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,20 +42,46 @@ const Login = () => {
     }
   }, [user, navigate]);
 
+  // Real-time Password Validation
+  useEffect(() => {
+    if (!isSignup) {
+      setPasswordFeedback("");
+      return;
+    }
+    if (!password) {
+      setPasswordFeedback("");
+      return;
+    }
+    
+    if (password.length < 8) {
+      setPasswordFeedback("Weak: Must be at least 8 characters.");
+    } else if (!/\d/.test(password)) {
+      setPasswordFeedback("Medium: Add a number for better security.");
+    } else if (!/[!@#$%^&*]/.test(password)) {
+      setPasswordFeedback("Good: Add a special char (@, #, $) to make it Strong.");
+    } else {
+      setPasswordFeedback("Strong: Excellent password!");
+    }
+  }, [password, isSignup]);
+
   const handleAuth = async () => {
     try {
       setError(null);
       
       let res;
       if (isSignup) {
-        // SIGN UP
+        // Validation before sending request
+        if (password.length < 8) {
+            setError("Password must be at least 8 characters long.");
+            return;
+        }
+
         res = await axios.post(
           BASE_URL + "/signup",
           { firstName, lastName, emailId: email, password },
           { withCredentials: true }
         );
       } else {
-        // LOGIN
         res = await axios.post(
           BASE_URL + "/login",
           { emailId: email, password },
@@ -57,19 +98,6 @@ const Login = () => {
     }
   };
 
-  // --- PREMIUM BACKGROUND ---
-  const PremiumBackground = () => (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
-       {/* Deep Purple Orb */}
-       <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.15] rounded-full blur-[120px]"></div>
-       {/* Sharp Geometry */}
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
-       {/* Precision Grid */}
-       <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}></div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden pt-20 pb-20">
       
@@ -80,7 +108,7 @@ const Login = () => {
         {/* GLASS CARD */}
         <div className="bg-white/70 backdrop-blur-2xl border border-white/60 rounded-[2.5rem] p-8 md:p-10 shadow-2xl shadow-indigo-500/10">
           
-          {/* Header (Cleaned up) */}
+          {/* Header */}
           <div className="mb-10 text-center">
             <h2 className="text-3xl font-display font-black text-slate-900 tracking-tight mb-2">
               {isSignup ? "Join Protocol" : "Welcome Back"}
@@ -141,20 +169,48 @@ const Login = () => {
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#4F46E5] transition-colors">
                         <FiLock />
                     </div>
+                    
+                    {/* Type toggles between "text" and "password" */}
                     <input 
-                      type="password" 
+                      type={showPassword ? "text" : "password"} 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white/50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-sm font-bold text-slate-900 focus:bg-white focus:outline-none focus:border-[#4F46E5] focus:ring-4 focus:ring-[#4F46E5]/10 transition-all"
+                      className="w-full bg-white/50 border border-slate-200 rounded-xl pl-11 pr-12 py-3.5 text-sm font-bold text-slate-900 focus:bg-white focus:outline-none focus:border-[#4F46E5] focus:ring-4 focus:ring-[#4F46E5]/10 transition-all"
                       placeholder="••••••••"
                     />
+
+                    {/* Toggle Visibility Button */}
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#4F46E5] transition-colors cursor-pointer"
+                    >
+                      {showPassword ? <FiEyeOff /> : <FiEye />}
+                    </button>
                 </div>
+
+                {/* Real-time Feedback Text */}
+                {isSignup && passwordFeedback && (
+                   <p className={`text-[10px] font-bold mt-1.5 ml-1 transition-colors ${
+                      passwordFeedback.startsWith("Strong") ? "text-green-600" :
+                      passwordFeedback.startsWith("Good") ? "text-blue-500" :
+                      passwordFeedback.startsWith("Medium") ? "text-yellow-600" :
+                      "text-rose-500"
+                   }`}>
+                      {passwordFeedback}
+                   </p>
+                )}
             </div>
             
-            {/* Error Message */}
+        
             {error && (
-              <div className="flex items-center gap-2 text-rose-600 text-xs font-bold bg-rose-50 border border-rose-100 p-4 rounded-xl animate-pulse">
-                <FiAlertCircle className="text-lg" /> {error}
+              <div className="mt-2 p-3 rounded-xl bg-rose-50 border border-rose-100 flex items-center gap-3 animate-fade-in-up">
+                <div className="p-1.5 bg-rose-100 rounded-full text-rose-600 flex-shrink-0">
+                   <FiAlertCircle className="text-lg" />
+                </div>
+                <p className="text-xs font-bold text-rose-600 leading-tight">
+                   {error}
+                </p>
               </div>
             )}
 
@@ -174,6 +230,7 @@ const Login = () => {
               <span 
                 onClick={() => {
                    setError(null);
+                   setPasswordFeedback("");
                    const newMode = isSignup ? "" : "?mode=signup";
                    navigate("/login" + newMode);
                 }}

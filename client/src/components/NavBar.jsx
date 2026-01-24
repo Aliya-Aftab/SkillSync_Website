@@ -1,5 +1,3 @@
-
-
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +45,6 @@ const NavBar = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 h-20 shadow-lg transition-all duration-300">
-      {/* FIX 1: Responsive Padding (px-4 on small, px-12 on large) gives links more room */}
       <div className="max-w-7xl mx-auto h-full px-4 lg:px-12 flex justify-between items-center">
         
         {/* 1. LOGO */}

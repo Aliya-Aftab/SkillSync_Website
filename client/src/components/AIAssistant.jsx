@@ -1,9 +1,16 @@
-
-
 import React, { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { FiCpu, FiSend, FiActivity, FiZap, FiCode, FiTrendingUp, FiUserCheck, FiMessageCircle } from "react-icons/fi";
+
+const PremiumBackground = () => (
+  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
+    <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.2] rounded-full blur-[120px]"></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
+    <div className="absolute inset-0 opacity-[0.6]" style={{ backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}></div>
+  </div>
+);
 
 const AIAssistant = () => {
   const [message, setMessage] = useState("");
@@ -39,16 +46,6 @@ const AIAssistant = () => {
     }
   };
 
-  //  BACKGROUND ---
-  const PremiumBackground = () => (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
-       <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.2] rounded-full blur-[120px]"></div>
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl"></div>
-       <div className="absolute inset-0 opacity-[0.6]" style={{ backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}></div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen pt-10 pb-10 px-4 sm:px-6 lg:px-8 relative flex flex-col items-center justify-start overflow-hidden">
       
@@ -57,10 +54,10 @@ const AIAssistant = () => {
       {/* HEADER*/}
       <div className="relative z-10 text-center mb-8 animate-fade-in-down">
          <h1 className="text-4xl md:text-6xl font-display font-black text-slate-900 tracking-tighter mb-3">
-            Supercharge Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] to-purple-600">Dev Journey</span>
+           Supercharge Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] to-purple-600">Dev Journey</span>
          </h1>
          <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">
-            Your personal career architect. Optimize your stack, find elite connections, and level up your profile.
+           Your personal career architect. Optimize your stack, find elite connections, and level up your profile.
          </p>
       </div>
 
@@ -91,9 +88,9 @@ const AIAssistant = () => {
                   
                   {/* SCROLLABLE RESPONSE AREA */}
                   <div className="flex-1 overflow-y-auto mb-6 pr-2 scrollbar-thin scrollbar-thumb-slate-200">
-                     {reply ? (
-                       // SHOW REPLY IF EXISTS
-                       <div className="animate-fade-in">
+                      {reply ? (
+                        // SHOW REPLY IF EXISTS
+                        <div className="animate-fade-in">
                           <div className="flex items-start gap-4 max-w-3xl">
                              <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-[#4F46E5] to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 mt-1">
                                 <FiCpu className="text-xl" />
@@ -105,11 +102,11 @@ const AIAssistant = () => {
                                  </div>
                              </div>
                           </div>
-                       </div>
-                     ) : (
-                       // SHOW PREDEFINED QUESTIONS IF NO REPLY
-                       <div className="h-full flex flex-col items-center justify-center py-6">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
+                        </div>
+                      ) : (
+                        // SHOW PREDEFINED QUESTIONS IF NO REPLY
+                        <div className="h-full flex flex-col items-center justify-center py-6">
+                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
                               
                               {/* Card 1 */}
                               <button 
@@ -159,34 +156,34 @@ const AIAssistant = () => {
                                   <p className="text-xs text-slate-500">Generate the perfect first message.</p>
                               </button>
 
-                          </div>
-                       </div>
-                     )}
+                           </div>
+                        </div>
+                      )}
                   </div>
 
                   {/* 3. INPUT AREA */}
                   <div className="relative mt-auto">
-                     <div className="relative bg-white rounded-2xl border border-slate-200 focus-within:border-[#4F46E5] focus-within:ring-4 focus-within:ring-[#4F46E5]/5 transition-all duration-300 flex flex-col md:flex-row items-end p-2 shadow-lg shadow-slate-200/50">
-                        <textarea
-                          className="w-full bg-transparent text-slate-900 p-4 min-h-[60px] max-h-[120px] outline-none resize-none text-base font-medium placeholder-slate-400"
-                          placeholder="Ask anything..."
-                          value={message}
-                          onChange={(e) => setMessage(e.target.value)}
-                          onKeyDown={handleKeyPress}
-                        />
-                        <button
-                          onClick={() => handleSubmit()}
-                          disabled={loading || !message.trim()}
-                          className={`m-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all active:scale-95 flex items-center gap-2 shrink-0 ${
-                            loading || !message.trim()
-                            ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                            : "bg-[#4F46E5] text-white hover:bg-[#3730A3] shadow-md hover:shadow-lg shadow-indigo-500/20"
-                          }`}
-                        >
-                          {loading ? <FiActivity className="animate-spin" /> : <FiSend />}
-                          <span className="hidden md:inline">Run</span>
-                        </button>
-                     </div>
+                      <div className="relative bg-white rounded-2xl border border-slate-200 focus-within:border-[#4F46E5] focus-within:ring-4 focus-within:ring-[#4F46E5]/5 transition-all duration-300 flex flex-col md:flex-row items-end p-2 shadow-lg shadow-slate-200/50">
+                         <textarea
+                           className="w-full bg-transparent text-slate-900 p-4 min-h-[60px] max-h-[120px] outline-none resize-none text-base font-medium placeholder-slate-400"
+                           placeholder="Ask anything..."
+                           value={message}
+                           onChange={(e) => setMessage(e.target.value)}
+                           onKeyDown={handleKeyPress}
+                         />
+                         <button
+                           onClick={() => handleSubmit()}
+                           disabled={loading || !message.trim()}
+                           className={`m-2 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all active:scale-95 flex items-center gap-2 shrink-0 ${
+                             loading || !message.trim()
+                             ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                             : "bg-[#4F46E5] text-white hover:bg-[#3730A3] shadow-md hover:shadow-lg shadow-indigo-500/20"
+                           }`}
+                         >
+                           {loading ? <FiActivity className="animate-spin" /> : <FiSend />}
+                           <span className="hidden md:inline">Run</span>
+                         </button>
+                      </div>
                   </div>
 
                </div>

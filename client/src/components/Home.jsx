@@ -1,10 +1,24 @@
-
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiCode, FiZap, FiCpu, FiUsers, FiGlobe, FiLayers, FiActivity, FiArrowRight, FiCheckCircle } from "react-icons/fi";
+
+//: Defined once, never re-created.
+const PremiumBackground = () => (
+  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-slate-50">
+    {/* Main Deep Purple Orb */}
+    <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.4] rounded-full blur-[120px]"></div>
+    
+    {/* Secondary Purple Glow */}
+    <div className="absolute bottom-[-10%] right-[-10%] w-[800px] h-[800px] bg-purple-600 opacity-[0.3] rounded-full blur-[120px]"></div>
+
+    {/* Geometry & Grid */}
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
+    <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}></div>
+  </div>
+);
 
 const features = [
   {
@@ -30,16 +44,16 @@ const features = [
 ];
 
 const Home = () => {
-
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
 
-  // 2. LOGIC: If user exists, kick them to Feed immediately
+  // Redirect if logged in
   useEffect(() => {
     if (user) {
       navigate("/feed");
     }
   }, [user, navigate]);
+
   const [displayText, setDisplayText] = useState("");
   const fullText = "The Neural Network for Developers.";
   
@@ -53,30 +67,13 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  
-  const PremiumBackground = () => (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-slate-50">
-       
-       {/* Main Deep Purple Orb - High Opacity for Visibility */}
-       <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.4] rounded-full blur-[120px]"></div>
-       
-       {/* Secondary Purple Glow */}
-       <div className="absolute bottom-[-10%] right-[-10%] w-[800px] h-[800px] bg-purple-600 opacity-[0.3] rounded-full blur-[120px]"></div>
-
-       {/* Geometry & Grid */}
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
-       <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}></div>
-    </div>
-  );
-
   return (
-    // PARENT: 'relative' creates the boundary for the background
     <div className="w-full min-h-screen text-slate-900 selection:bg-[#4F46E5]/20 relative overflow-x-hidden">
       
-      {/* 1. BACKGROUND (Layer 0) */}
+      {/* 1. BACKGROUND */}
       <PremiumBackground />
       
-      {/* 2. CONTENT WRAPPER (Layer 10 - Sits ABOVE background) */}
+      {/* 2. CONTENT WRAPPER */}
       <div className="relative z-10">
         
         {/* HERO SECTION */}
@@ -171,7 +168,7 @@ const Home = () => {
                   </div>
                   
                   <div className="mt-8 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 text-[#4F46E5] text-xs font-bold uppercase tracking-widest">
-                     <span>Explore</span> <FiArrowRight />
+                      <span>Explore</span> <FiArrowRight />
                   </div>
                 </motion.div>
               ))}
@@ -184,7 +181,6 @@ const Home = () => {
           <div className="max-w-6xl mx-auto">
             <div className="bg-white rounded-[2.5rem] p-12 md:p-16 shadow-2xl shadow-indigo-500/15 border-2 border-slate-100 flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left relative overflow-hidden">
                
-               {/* Subtle white pattern inside card */}
                <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full blur-3xl -z-10"></div>
 
                <div className="md:w-1/3 relative z-10">

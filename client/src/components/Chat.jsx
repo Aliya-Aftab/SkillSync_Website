@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { addMessage } from "../utils/chatSlice"; 
 import { FiSend, FiArrowLeft, FiMoreVertical, FiImage, FiCheck } from "react-icons/fi";
 
 const formatTime = (isoString) => {
@@ -13,10 +12,14 @@ const formatTime = (isoString) => {
   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 };
 
+const chatBackgroundStyle = {
+  backgroundImage: 'radial-gradient(#cbd5e1 0.8px, transparent 0.8px)',
+  backgroundSize: '32px 32px'
+};
+
 const Chat = () => {
   const { targetUserId } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -121,6 +124,7 @@ const Chat = () => {
   if (!targetUser && messages.length === 0) return <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-400">Loading secure channel...</div>;
 
   return (
+    // Layout adjusted to respect the global NavBar (mt-20) and not get stuck behind the Footer
     <div className="flex flex-col h-[calc(100vh-5rem)] mt-20 bg-[#f8fafc] overflow-hidden relative">
       
       {/* 1. HEADER */}
@@ -157,10 +161,10 @@ const Chat = () => {
         </button>
       </div>
 
-      {/* --- 2. MESSAGES AREA */}
+      {/* --- 2. MESSAGES AREA --- */}
       <div 
         className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6"
-        style={{ backgroundImage: 'radial-gradient(#cbd5e1 0.8px, transparent 0.8px)', backgroundSize: '32px 32px' }}
+        style={chatBackgroundStyle}
       >
         {messages.map((msg, index) => {
           const isSelf = msg.senderId === userId || msg.firstName === user.firstName;
@@ -172,7 +176,7 @@ const Chat = () => {
             >
               <div className={`max-w-[80%] md:max-w-[65%] flex flex-col ${isSelf ? "items-end" : "items-start"}`}>
                 
-                {/* BUBBLE DESIGN - Added border and shadow for visibility */}
+                {/* BUBBLE */}
                 <div
                   className={`px-5 py-3 text-sm md:text-base leading-relaxed relative shadow-md
                     ${isSelf 

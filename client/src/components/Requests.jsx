@@ -1,10 +1,29 @@
-
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests, removeRequest } from "../utils/requestSlice";
 import { FiCheck, FiX, FiBell, FiUser } from "react-icons/fi";
+
+
+const PremiumBackground = () => (
+  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
+    {/* 1. Deep Purple Orb */}
+    <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.15] rounded-full blur-[120px]"></div>
+    
+    {/* 2. Sharp Geometry */}
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-3xl"></div>
+
+    {/* 3. Precision Grid */}
+    <div className="absolute inset-0 opacity-[0.5]" 
+         style={{ 
+           backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', 
+           backgroundSize: '32px 32px' 
+         }}>
+    </div>
+  </div>
+);
 
 const Requests = () => {
   const dispatch = useDispatch();
@@ -21,7 +40,6 @@ const Requests = () => {
       );
       setToastMsg(`Request ${status} successfully!`);
       setAcceptedIds((prev) => [...prev, _id]);
-      
       
       setTimeout(() => {
         dispatch(removeRequest(_id));
@@ -48,26 +66,6 @@ const Requests = () => {
   useEffect(() => {
     fetchRequests();
   }, []);
-
-  // --- BACKGROUND ---
-  const PremiumBackground = () => (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
-       {/* 1. Deep Purple Orb */}
-       <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.15] rounded-full blur-[120px]"></div>
-       
-       {/* 2. Sharp Geometry */}
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] border border-indigo-200/60 rounded-full opacity-50"></div>
-       <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-3xl"></div>
-
-       {/* 3. Precision Grid */}
-       <div className="absolute inset-0 opacity-[0.5]" 
-            style={{ 
-              backgroundImage: 'radial-gradient(#94a3b8 1.5px, transparent 1.5px)', 
-              backgroundSize: '32px 32px' 
-            }}>
-       </div>
-    </div>
-  );
 
   if (!requests) return null;
 
@@ -127,7 +125,6 @@ const Requests = () => {
               return (
                 <div
                   key={request._id}
-                  // Updated Card Style: Glassmorphism to show background
                   className={`flex flex-col md:flex-row items-center gap-6 bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/60 shadow-lg shadow-indigo-500/5 hover:shadow-indigo-500/10 transition-all duration-500 ${
                     isFading ? "opacity-0 -translate-x-10 pointer-events-none" : "opacity-100"
                   }`}

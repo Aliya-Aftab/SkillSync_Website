@@ -1,8 +1,4 @@
-
-
 import { Outlet, useNavigate } from "react-router-dom";
-import NavBar from "./NavBar"; 
-import Footer from "./Footer";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +15,7 @@ const Body = () => {
       const res = await axios.get(BASE_URL + "/profile/view", {
         withCredentials: true,
       });
-      dispatch(addUser(res.data));
+      dispatch(addUser(res.data.data || res.data)); 
     } catch (err) {
       if (err.response && err.response.status === 401) {
         navigate("/login");
@@ -29,21 +25,12 @@ const Body = () => {
   };
 
   useEffect(() => {
-    // Only fetch if we don't have a user yet
     if (!user) {
       fetchUser();
     }
   }, [user]); 
   
-  return (
-    <div>
-      <NavBar />
-      <div className="pt-20">
-        <Outlet />
-      </div>
-      <Footer />
-    </div>
-  );
+  return <Outlet />;
 };
 
 export default Body;

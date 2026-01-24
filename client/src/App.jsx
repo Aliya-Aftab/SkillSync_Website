@@ -1,5 +1,3 @@
-
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore"; 
@@ -10,6 +8,7 @@ import Home from "./components/Home";
 import Login from "./components/Login"; 
 import NavBar from "./components/NavBar"; 
 import Footer from "./components/Footer"; 
+import ScrollToTop from "./components/ScrollToTop"; 
 
 // Private Pages
 import Feed from "./components/Feed";
@@ -29,7 +28,9 @@ function App() {
       <div className="min-h-screen flex flex-col bg-canvas text-ink font-sans selection:bg-primary/20">
         <Router>
           
-         
+          
+          <ScrollToTop />
+
           <NavBar />
 
           <Routes>
@@ -38,6 +39,7 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             {/* --- PROTECTED ROUTES --- */}
+            {/* Body.jsx acts as the Wrapper (Outlet) for these pages */}
             <Route element={<Body />}>
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
@@ -50,10 +52,8 @@ function App() {
             </Route>
           </Routes>
 
-         
           <Footer />
         
-
           <Toaster position="top-center" />
         </Router>
       </div>
