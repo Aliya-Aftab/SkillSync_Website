@@ -31,8 +31,6 @@ const EditProfile = () => {
 
   const [error, setError] = useState("");
   
-  // ❌ REMOVED: Manual Toast State (const [showToast, setShowToast]...)
-
   useEffect(() => {
     if (user) {
       setFirstname(user.firstName || "");
@@ -65,7 +63,6 @@ const EditProfile = () => {
       );
       
       dispatch(addUser(res.data.data));
-      
       toast.success("Profile updated successfully");
       
     } catch (error) {
@@ -87,10 +84,10 @@ const EditProfile = () => {
       
       <PremiumBackground />
 
-      <div className="relative z-10 flex flex-col lg:flex-row bg-white/60 backdrop-blur-2xl">
+      <div className="relative z-10 flex flex-col lg:flex-row items-start bg-white/60 backdrop-blur-2xl">
         
-        {/* LEFT COLUMN: Form */}
-        <div className="flex-1 p-8 lg:p-10 border-r border-indigo-100/50">
+       
+        <div className="w-full lg:w-2/3 p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-indigo-100/50">
           <h3 className="text-2xl font-display font-black text-slate-900 mb-6 tracking-tight">Edit Profile</h3>
           
           <div className="space-y-6">
@@ -151,14 +148,26 @@ const EditProfile = () => {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Preview */}
-        <div className="hidden lg:flex flex-1 p-10 flex-col items-center justify-center bg-white/20 backdrop-blur-sm border-l border-white/40">
+      
+        <div className="w-full lg:w-1/3 flex flex-col items-center justify-start p-10 lg:h-auto lg:sticky lg:top-0">
            <div className="mb-8 text-center">
               <span className="bg-white/80 border border-indigo-100 text-[#4F46E5] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">Your Profile Preview</span>
-              <p className="text-slate-600 text-sm mt-3 font-medium">Update your profile</p>
+              <p className="text-slate-600 text-sm mt-3 font-medium">This is what others will see</p>
            </div>
-           <div className="w-[360px] pointer-events-none select-none transform scale-100 drop-shadow-2xl">
-              <UserCard user={{ firstName, lastName, photoURL, about, age, gender, skills: skills ? skills.split(",").map(s => s.trim()).filter(s => s !== "") : [] }} />
+           
+           {/* Card Container */}
+           <div className="w-full max-w-[340px] pointer-events-none select-none drop-shadow-2xl transform transition-transform">
+              <UserCard 
+                user={{ 
+                  firstName, 
+                  lastName, 
+                  photoURL, 
+                  about, 
+                  age, 
+                  gender, 
+                  skills: skills ? skills.split(",").map(s => s.trim()).filter(s => s !== "") : [] 
+                }} 
+              />
            </div>
         </div>
       </div>

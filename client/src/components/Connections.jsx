@@ -6,6 +6,9 @@ import { addConnection } from "../utils/connectionSlice";
 import { Link } from "react-router-dom";
 import { FiSearch, FiMessageSquare, FiLoader, FiZap, FiX, FiTrash2 } from "react-icons/fi";
 
+
+import toast from "react-hot-toast";
+
 const PremiumBackground = () => (
   <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#F8FAFC]">
     <div className="absolute top-[-20%] left-[-10%] w-[900px] h-[900px] bg-[#4F46E5] opacity-[0.2] rounded-full blur-[120px]"></div>
@@ -46,8 +49,12 @@ const Connections = () => {
       // 2. Refresh the list immediately
       fetchConnections();
       
+      toast.success("Connection removed successfully"
+  );
+
     } catch (error) {
       console.error("Failed to disconnect:", error);
+      toast.error("Failed to remove connection");
     }
   };
 

@@ -28,7 +28,6 @@ function App() {
       <div className="min-h-screen flex flex-col bg-canvas text-ink font-sans selection:bg-primary/20">
         <Router>
           
-          
           <ScrollToTop />
 
           <NavBar />
@@ -54,7 +53,41 @@ function App() {
 
           <Footer />
         
-          <Toaster position="top-center" />
+          {/* TOASTER CONFIGURATION */}
+          <Toaster 
+            position="top-center" 
+            reverseOrder={false} 
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: '#1e293b', // Slate-800 (Dark Premium)
+                color: '#fff',         // White Text
+                borderRadius: '12px',
+                padding: '16px',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                marginTop: '80px', // Pushes it down slightly so it doesn't cover the Navbar
+              },
+              success: {
+                iconTheme: {
+                  primary: '#4F46E5', // Indigo 
+                  secondary: '#fff',
+                },
+              },
+              error: {
+                style: {
+                  background: '#fff1f2', // Light Rose
+                  color: '#e11d48',      // Rose Red Text
+                  border: '1px solid #ffe4e6'
+                },
+                iconTheme: {
+                  primary: '#e11d48',
+                  secondary: '#fff',
+                },
+              },
+            }}
+          />
         </Router>
       </div>
     </Provider>

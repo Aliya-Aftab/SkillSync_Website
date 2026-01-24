@@ -47,7 +47,7 @@ const AIAssistant = () => {
   };
 
   return (
-    <div className="min-h-screen pt-10 pb-10 px-4 sm:px-6 lg:px-8 relative flex flex-col items-center justify-start overflow-hidden">
+    <div className="min-h-screen pt-28 pb-10 px-4 sm:px-6 lg:px-8 relative flex flex-col items-center justify-start overflow-hidden">
       
       <PremiumBackground />
 
@@ -85,85 +85,85 @@ const AIAssistant = () => {
 
                {/* 2. CONTENT AREA */}
                <div className="flex-1 p-6 md:p-8 flex flex-col relative bg-slate-50/30">
-                  
-                  {/* SCROLLABLE RESPONSE AREA */}
-                  <div className="flex-1 overflow-y-auto mb-6 pr-2 scrollbar-thin scrollbar-thumb-slate-200">
-                      {reply ? (
-                        // SHOW REPLY IF EXISTS
-                        <div className="animate-fade-in">
-                          <div className="flex items-start gap-4 max-w-3xl">
-                             <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-[#4F46E5] to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 mt-1">
-                                <FiCpu className="text-xl" />
-                             </div>
-                             <div className="flex-1">
-                                 <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Insight</div>
-                                 <div className="text-slate-800 text-base leading-relaxed font-medium whitespace-pre-line bg-white p-6 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm">
-                                    {reply}
-                                 </div>
-                             </div>
-                          </div>
-                        </div>
-                      ) : (
-                        // SHOW PREDEFINED QUESTIONS IF NO REPLY
-                        <div className="h-full flex flex-col items-center justify-center py-6">
+                 
+                 {/* SCROLLABLE RESPONSE AREA */}
+                 <div className="flex-1 overflow-y-auto mb-6 pr-2 scrollbar-thin scrollbar-thumb-slate-200">
+                     {reply ? (
+                       // SHOW REPLY IF EXISTS
+                       <div className="animate-fade-in">
+                         <div className="flex items-start gap-4 max-w-3xl">
+                            <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-[#4F46E5] to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 mt-1">
+                               <FiCpu className="text-xl" />
+                            </div>
+                            <div className="flex-1">
+                                <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Insight</div>
+                                <div className="text-slate-800 text-base leading-relaxed font-medium whitespace-pre-wrap bg-white p-6 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm">
+                                   {reply}
+                                </div>
+                            </div>
+                         </div>
+                       </div>
+                     ) : (
+                       // SHOW PREDEFINED QUESTIONS IF NO REPLY
+                       <div className="h-full flex flex-col items-center justify-center py-6">
                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
-                              
-                              {/* Card 1 */}
-                              <button 
-                                onClick={() => handleSubmit("Analyze my profile and suggest improvements")}
-                                className="group p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
-                              >
-                                  <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#4F46E5] group-hover:text-white transition-colors">
-                                      <FiUserCheck className="text-xl" />
-                                  </div>
-                                  <h3 className="font-bold text-slate-800 mb-1">Analyze My Profile</h3>
-                                  <p className="text-xs text-slate-500">Get AI feedback to stand out to recruiters.</p>
-                              </button>
+                             
+                             {/* Card 1 */}
+                             <button 
+                               onClick={() => handleSubmit("Analyze my profile and suggest improvements")}
+                               className="group p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
+                             >
+                                 <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#4F46E5] group-hover:text-white transition-colors">
+                                     <FiUserCheck className="text-xl" />
+                                 </div>
+                                 <h3 className="font-bold text-slate-800 mb-1">Analyze My Profile</h3>
+                                 <p className="text-xs text-slate-500">Get AI feedback to stand out to recruiters.</p>
+                             </button>
 
-                              {/* Card 2 */}
-                              <button 
-                                onClick={() => handleSubmit("How can I get more matches on SkillSync?")}
-                                className="group p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
-                              >
-                                  <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#4F46E5] group-hover:text-white transition-colors">
-                                      <FiTrendingUp className="text-xl" />
-                                  </div>
-                                  <h3 className="font-bold text-slate-800 mb-1">Boost My Matches</h3>
-                                  <p className="text-xs text-slate-500">Tips to increase visibility and connections.</p>
-                              </button>
+                             {/* Card 2 */}
+                             <button 
+                               onClick={() => handleSubmit("How can I get more matches on SkillSync?")}
+                               className="group p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
+                             >
+                                 <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#4F46E5] group-hover:text-white transition-colors">
+                                     <FiTrendingUp className="text-xl" />
+                                 </div>
+                                 <h3 className="font-bold text-slate-800 mb-1">Boost My Matches</h3>
+                                 <p className="text-xs text-slate-500">Tips to increase visibility and connections.</p>
+                             </button>
 
-                              {/* Card 3 */}
-                              <button 
-                                onClick={() => handleSubmit("Suggest a project idea for my tech stack")}
-                                className="group p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
-                              >
-                                  <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#4F46E5] group-hover:text-white transition-colors">
-                                      <FiCode className="text-xl" />
-                                  </div>
-                                  <h3 className="font-bold text-slate-800 mb-1">Project Ideas</h3>
-                                  <p className="text-xs text-slate-500">Find something cool to build next.</p>
-                              </button>
+                             {/* Card 3 */}
+                             <button 
+                               onClick={() => handleSubmit("Suggest a project idea for my tech stack")}
+                               className="group p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
+                             >
+                                 <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#4F46E5] group-hover:text-white transition-colors">
+                                     <FiCode className="text-xl" />
+                                 </div>
+                                 <h3 className="font-bold text-slate-800 mb-1">Project Ideas</h3>
+                                 <p className="text-xs text-slate-500">Find something cool to build next.</p>
+                             </button>
 
-                              {/* Card 4 */}
-                              <button 
-                                onClick={() => handleSubmit("Write a professional connection request message")}
-                                className="group p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
-                              >
-                                  <div className="w-10 h-10 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#4F46E5] group-hover:text-white transition-colors">
-                                      <FiMessageCircle className="text-xl" />
-                                  </div>
-                                  <h3 className="font-bold text-slate-800 mb-1">Icebreakers</h3>
-                                  <p className="text-xs text-slate-500">Generate the perfect first message.</p>
-                              </button>
+                             {/* Card 4 */}
+                             <button 
+                               onClick={() => handleSubmit("Write a professional connection request message")}
+                               className="group p-5 bg-white border border-slate-200 rounded-2xl text-left hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300"
+                             >
+                                 <div className="w-10 h-10 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#4F46E5] group-hover:text-white transition-colors">
+                                     <FiMessageCircle className="text-xl" />
+                                 </div>
+                                 <h3 className="font-bold text-slate-800 mb-1">Icebreakers</h3>
+                                 <p className="text-xs text-slate-500">Generate the perfect first message.</p>
+                             </button>
 
                            </div>
                         </div>
-                      )}
-                  </div>
+                     )}
+                 </div>
 
-                  {/* 3. INPUT AREA */}
-                  <div className="relative mt-auto">
-                      <div className="relative bg-white rounded-2xl border border-slate-200 focus-within:border-[#4F46E5] focus-within:ring-4 focus-within:ring-[#4F46E5]/5 transition-all duration-300 flex flex-col md:flex-row items-end p-2 shadow-lg shadow-slate-200/50">
+                 {/* 3. INPUT AREA */}
+                 <div className="relative mt-auto">
+                     <div className="relative bg-white rounded-2xl border border-slate-200 focus-within:border-[#4F46E5] focus-within:ring-4 focus-within:ring-[#4F46E5]/5 transition-all duration-300 flex flex-col md:flex-row items-end p-2 shadow-lg shadow-slate-200/50">
                          <textarea
                            className="w-full bg-transparent text-slate-900 p-4 min-h-[60px] max-h-[120px] outline-none resize-none text-base font-medium placeholder-slate-400"
                            placeholder="Ask anything..."
@@ -183,8 +183,8 @@ const AIAssistant = () => {
                            {loading ? <FiActivity className="animate-spin" /> : <FiSend />}
                            <span className="hidden md:inline">Run</span>
                          </button>
-                      </div>
-                  </div>
+                     </div>
+                 </div>
 
                </div>
            </div>

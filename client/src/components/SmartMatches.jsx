@@ -71,8 +71,7 @@ const SmartMatches = () => {
   }, []);
 
   return (
-    // Added 'relative' so the absolute background knows where to sit
-    <div className="min-h-screen pt-10 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen pt-28 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       
       {/* Layer 1: Background (z-0) */}
       <PremiumBackground />
