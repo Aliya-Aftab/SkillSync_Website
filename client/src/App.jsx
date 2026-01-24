@@ -8,8 +8,8 @@ import appStore from "./utils/appStore";
 import Body from "./components/Body"; 
 import Home from "./components/Home"; 
 import Login from "./components/Login"; 
-import NavBar from "./components/NavBar"; // Imported but was missing in JSX
-import Footer from "./components/Footer"; // Make sure you import Footer if you have it!
+import NavBar from "./components/NavBar"; 
+import Footer from "./components/Footer"; 
 
 // Private Pages
 import Feed from "./components/Feed";
@@ -51,8 +51,8 @@ function App() {
           </Routes>
 
          
-          {/* <Footer /> */} 
-          {/* (Uncomment the line above once you create/import your Footer component) */}
+          <Footer />
+        
 
           <Toaster position="top-center" />
         </Router>
