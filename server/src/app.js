@@ -11,7 +11,11 @@ const http = require("http");
 
 app.use(
   cors({
-   origin: process.env.FRONTEND_URL,
+  //  origin: process.env.FRONTEND_URL,
+ origin: [
+      "http://localhost:5173",                     // Localhost
+      "https://skill-sync-website-lovat.vercel.app" // Vercel URL
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
